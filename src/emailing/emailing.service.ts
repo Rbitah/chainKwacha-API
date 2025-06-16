@@ -70,7 +70,29 @@ export class EmailingService {
     await this.transporter.sendMail(mailOptions);
   }
 
-  async sendTransactionEmail(){
-    
-  }
+  async sendPasswordResetCode(to: string, code: string, username: string): Promise<void> {
+  const from = this.configService.get<string>('EMAIL_USER');
+
+  const mailOptions = {
+    from: `"ChainKwacha Support" <${from}>`,
+    to,
+    subject: 'Reset Your ChainKwacha Password',
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #ddd;padding:20px;border-radius:10px;background:#fff;">
+        <h2 style="color:#f39c12;">Password Reset Request</h2>
+        <p style="font-size:15px;">Hi <strong>${username}</strong>,</p>
+        <p style="font-size:15px;">We received a request to reset your ChainKwacha password. Use the code below to reset it:</p>
+        <div style="text-align:center;margin:20px 0;">
+          <span style="font-size:28px;font-weight:bold;color:#444;background:#fef3c7;padding:10px 20px;border-radius:5px;">${code}</span>
+        </div>
+        <p style="font-size:14px;color:#999;">This code is valid for a limited time. Do not share it with anyone.</p>
+        <p style="font-size:13px;color:#777;margin-top:30px;">If you didn't request this, you can safely ignore this email.</p>
+        <p style="margin-top:30px;">— The ChainKwacha Team</p>
+      </div>
+    `
+  };
+
+  await this.transporter.sendMail(mailOptions);
+}
+
 }
