@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { RegisterDto } from 'src/authentication/dto/create-authentication.dto';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) { }
+
+  async signUp(dto: RegisterDto): Promise<User> {
+    const existingUser = await this.userRepository.findOne({ where: { email: dto.email } });
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
+    const hash = await bcrypt.hash(dto.password, 10);
+    const user = this.userRepository.create({ ...dto, password: hash });
+    return this.userRepository.save(user);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async loginUser(dto) {
+    const user = await this.userRepository.findOne({ where: { email: dto.email } });
+
+    if (!user) {
+      throw new NotFoundException("User Not Found")
+    }
+    const isPassValid = await bcrypt.compare(dto.password, user.password)
+
+    if (!isPassValid) {
+      throw new UnauthorizedException("Invalid credentials")
+    }
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
 }

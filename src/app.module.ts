@@ -13,10 +13,23 @@ import { SubscriptionApiModule } from './subscription-api/subscription-api.modul
 import { EmailingModule } from './emailing/emailing.module';
 import { WalletsModule } from './wallets/wallets.module';
 import { SendingSmsModule } from './sending_sms/sending_sms.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from 'typeormConfig';
 
 @Module({
-  imports: [UsersModule, BanksApiModule, MobileMoneyApiModule, MerchantModule, TransactionModule, WebhookEventsModule, DeveloperApiModule, AuthenticationModule, SubscriptionApiModule, EmailingModule, WalletsModule, SendingSmsModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
+
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: typeOrmConfig,
+    }), UsersModule, BanksApiModule, MobileMoneyApiModule, MerchantModule, TransactionModule, WebhookEventsModule, DeveloperApiModule, AuthenticationModule, SubscriptionApiModule, EmailingModule, WalletsModule, SendingSmsModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

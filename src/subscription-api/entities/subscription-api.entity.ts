@@ -6,9 +6,9 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     JoinColumn,
-    Transaction,
 } from 'typeorm';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
+import { Transaction } from 'src/transaction/entities/transaction.entity';
 import { SubscriptionStatus } from '../enum/subscription.enum';
 import { BillingCycle } from '../enum/subscription.enum';
 import { Wallet } from 'src/wallets/entities/wallet.entity';
@@ -30,27 +30,26 @@ export class Subscription {
     @Column({ type: 'enum', enum: BillingCycle, default: BillingCycle.MONTHLY })
     billingCycle: BillingCycle;
 
-    @Column({ type: 'timestamp' })
+    @Column()
     startDate: Date;
 
-    @Column({ type: 'timestamp' })
+    @Column()
     endDate: Date;
 
     @Column({ default: false })
     autoRenew: boolean;
 
-    @ManyToOne(() => Merchant, merchant => merchant.subscriptions, { nullable: false })
+    @ManyToOne(() => Merchant, { nullable: false })
     @JoinColumn()
     merchant: Merchant;
 
-    @ManyToOne(() => Wallet, wallet => wallet.subscriptions, { nullable: false })
+    @ManyToOne(() => Wallet, { nullable: false })
     @JoinColumn()
     wallet: Wallet;
 
     @ManyToOne(() => Transaction, { nullable: true })
     @JoinColumn()
     transaction: Transaction;
-
 
     @CreateDateColumn()
     createdAt: Date;

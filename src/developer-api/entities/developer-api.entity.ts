@@ -7,12 +7,13 @@ export class DeveloperApi {
     @PrimaryGeneratedColumn('uuid')
     developer_ID: string;
 
-    @OneToOne(() => User, user => user.developerProfile)
+    @OneToOne(() => User)
     @JoinColumn()
     user: User;
 
-    @ManyToOne(()=>Merchant)
-    merchant:Merchant
+    @ManyToOne(() => Merchant)
+    @JoinColumn()
+    merchant: Merchant;
 
     @Column({ unique: true })
     pub_test_API_key: string;
@@ -27,9 +28,8 @@ export class DeveloperApi {
     sec_live_API_key: string;
 
     @CreateDateColumn()
-    createdAt:Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updatedAt:Date;
-
+    updatedAt: Date;
 }

@@ -24,7 +24,7 @@ export class Transaction {
     @Column({ type: 'enum', enum: PaymentMethod })
     paymentMethod: PaymentMethod;
 
-    @ManyToOne(() => Merchant, merchant => merchant.transactions, { nullable: true })
+    @ManyToOne(() => Merchant, { nullable: true })
     @JoinColumn()
     merchant: Merchant;
 
@@ -32,11 +32,11 @@ export class Transaction {
     @JoinColumn()
     customer: User;
 
-    @ManyToOne(() => Wallet, wallet => wallet.outgoingTransactions, { nullable: true })
+    @ManyToOne(() => Wallet, { nullable: true })
+    @JoinColumn()
     fromWallet: Wallet;
 
-    @ManyToOne(() => Wallet, wallet => wallet.incomingTransactions, { nullable: true })
+    @ManyToOne(() => Wallet, { nullable: true })
+    @JoinColumn()
     toWallet: Wallet;
-    
-
 }

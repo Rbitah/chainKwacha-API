@@ -7,11 +7,10 @@ import { Subscription } from "src/subscription-api/entities/subscription-api.ent
 
 @Entity()
 export class Merchant {
-
     @PrimaryGeneratedColumn('uuid')
     merchant_ID: string;
 
-    @OneToOne(() => User, user => user.merchantProfile)
+    @OneToOne(() => User)
     @JoinColumn()
     user: User;
 
@@ -21,14 +20,12 @@ export class Merchant {
     @Column({ type: 'enum', enum: MerchantVerificationStatus, default: MerchantVerificationStatus.NOT_VERIFIED })
     verificationStatus: MerchantVerificationStatus;
 
-    @OneToMany(() => Wallet, Wallet => Wallet.merchant)
-    wallets: Wallet[]
+    @OneToMany(() => Wallet, wallet => wallet.merchant)
+    wallets: Wallet[];
 
     @OneToMany(() => Transaction, transaction => transaction.merchant)
     transactions: Transaction[];
 
     @OneToMany(() => Subscription, subscription => subscription.merchant)
     subscriptions: Subscription[];
-
-
 }
