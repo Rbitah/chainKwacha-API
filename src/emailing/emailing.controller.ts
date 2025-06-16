@@ -7,28 +7,28 @@ import { UpdateEmailingDto } from './dto/update-emailing.dto';
 export class EmailingController {
   constructor(private readonly emailingService: EmailingService) {}
 
-  @Post()
-  create(@Body() createEmailingDto: CreateEmailingDto) {
-    return this.emailingService.create(createEmailingDto);
-  }
+  // @Post()
+  // create(@Body() createEmailingDto: CreateEmailingDto) {
+  //   return this.emailingService.create(createEmailingDto);
+  // }
 
-  @Get()
-  findAll() {
-    return this.emailingService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.emailingService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.emailingService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.emailingService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmailingDto: UpdateEmailingDto) {
-    return this.emailingService.update(+id, updateEmailingDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateEmailingDto: UpdateEmailingDto) {
+  //   return this.emailingService.update(+id, updateEmailingDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.emailingService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.emailingService.remove(+id);
+  // }
 }
