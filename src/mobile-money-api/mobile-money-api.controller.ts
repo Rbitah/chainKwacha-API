@@ -3,12 +3,15 @@ import { MobileMoneyApiService } from './mobile-money-api.service';
 import { CreateMobileMoneyApiDto } from './dto/create-mobile-money-api.dto';
 import { UpdateMobileMoneyApiDto } from './dto/update-mobile-money-api.dto';
 import { AuthenticationGuard } from 'src/authentication/guards/authentication.guard';
+import { RoleGuardAuth } from 'src/authentication/guards/roles.guard';
+import { Roles } from 'src/authentication/decorator/roles.decorator';
 
 @Controller('mobile-money-api')
 export class MobileMoneyApiController {
   constructor(private readonly mobileMoneyApiService: MobileMoneyApiService) {}
 
-  @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard,RoleGuardAuth)
+  @Roles(['CUSTOMER'])
   @Post()
   create(@Body() createMobileMoneyApiDto: CreateMobileMoneyApiDto) {
     return this.mobileMoneyApiService.create(createMobileMoneyApiDto);
