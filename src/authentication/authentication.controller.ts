@@ -16,4 +16,14 @@ export class AuthenticationController {
   login(@Body() loginDto:LoginDto){
     return this.authenticationService.login(loginDto)
   }
+
+  @Post("forgot-password") 
+  forgot(@Body()body: { email: string }) {
+  return this.authenticationService.forgetPassword(body.email)
+}
+
+  @Post("change-password") 
+  resetPassword(@Body()body:{email:string,newPassword:string,code:string}) {
+    return this.authenticationService.changePassword(body.email,body.newPassword,body.code)
+  }
 }
