@@ -16,6 +16,6 @@ export const typeOrmConfig = (configService: ConfigService): TypeOrmModuleOption
   password: '',
   database: 'oneBank',
   entities: [User,Merchant,DeveloperApi,Wallet,Transaction,Subscription],
-  synchronize: true,
+  synchronize: false,
   logging: true,
 });
