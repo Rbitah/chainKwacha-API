@@ -4,11 +4,8 @@ import { Merchant } from "src/merchant/entities/merchant.entity";
 import { DeveloperApi } from "src/developer-api/entities/developer-api.entity";
 import { Wallet } from "src/wallets/entities/wallet.entity";
 
-
-
 @Entity("User")
 export class User {
-
     @PrimaryGeneratedColumn('uuid')
     user_ID: string;
 
@@ -41,5 +38,4 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt: Date;
-
 }
