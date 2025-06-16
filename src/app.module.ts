@@ -16,6 +16,7 @@ import { SendingSmsModule } from './sending_sms/sending_sms.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from 'typeormConfig';
+import { RedisModule } from '@nestjs-modules/ioredis';
 
 @Module({
   imports: [
@@ -24,12 +25,32 @@ import { typeOrmConfig } from 'typeormConfig';
       envFilePath: '.env',
     }),
 
+ RedisModule.forRoot({
+      type: 'single',
+      url: 'redis://localhost:6379',
+    }),
+
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: typeOrmConfig,
-    }), UsersModule, BanksApiModule, MobileMoneyApiModule, MerchantModule, TransactionModule, WebhookEventsModule, DeveloperApiModule, AuthenticationModule, SubscriptionApiModule, EmailingModule, WalletsModule, SendingSmsModule],
+    }),
+
+    UsersModule,
+    BanksApiModule,
+    MobileMoneyApiModule,
+    MerchantModule,
+    TransactionModule,
+    WebhookEventsModule,
+    DeveloperApiModule,
+    AuthenticationModule,
+    SubscriptionApiModule,
+    EmailingModule,
+    WalletsModule,
+    SendingSmsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
