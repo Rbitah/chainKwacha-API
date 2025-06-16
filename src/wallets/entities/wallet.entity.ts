@@ -10,6 +10,7 @@ import {
 import { User } from 'src/users/entities/user.entity';
 import { Merchant } from 'src/merchant/entities/merchant.entity';
 import { Transaction } from 'src/transaction/entities/transaction.entity';
+import { Subscription } from 'src/subscription-api/entities/subscription-api.entity';
 
 export enum WalletType {
   CUSTOMER = 'CUSTOMER',
@@ -43,6 +44,10 @@ export class Wallet {
 
   @OneToMany(() => Transaction, transaction => transaction.toWallet)
   incomingTransactions: Transaction[];
+
+  @OneToMany(() => Subscription, subscription => subscription.wallet)
+  subscriptions: Subscription[];
+
 
   @CreateDateColumn()
   createdAt: Date;

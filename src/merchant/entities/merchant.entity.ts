@@ -3,6 +3,7 @@ import { User } from "src/users/entities/user.entity";
 import { Wallet } from "src/wallets/entities/wallet.entity";
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { MerchantVerificationStatus } from "../enum/merchant.enum";
+import { Subscription } from "src/subscription-api/entities/subscription-api.entity";
 
 @Entity()
 export class Merchant {
@@ -25,5 +26,9 @@ export class Merchant {
 
     @OneToMany(() => Transaction, transaction => transaction.merchant)
     transactions: Transaction[];
+
+    @OneToMany(() => Subscription, subscription => subscription.merchant)
+    subscriptions: Subscription[];
+
 
 }

@@ -37,5 +37,6 @@ export class Transaction {
 
     @ManyToOne(() => Wallet, wallet => wallet.incomingTransactions, { nullable: true })
     toWallet: Wallet;
+    
 
 }
