@@ -12,9 +12,10 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { SubscriptionApiModule } from './subscription-api/subscription-api.module';
 import { EmailingModule } from './emailing/emailing.module';
 import { WalletsModule } from './wallets/wallets.module';
+import { SendingSmsModule } from './sending_sms/sending_sms.module';
 
 @Module({
-  imports: [UsersModule, BanksApiModule, MobileMoneyApiModule, MerchantModule, TransactionModule, WebhookEventsModule, DeveloperApiModule, AuthenticationModule, SubscriptionApiModule, EmailingModule, WalletsModule],
+  imports: [UsersModule, BanksApiModule, MobileMoneyApiModule, MerchantModule, TransactionModule, WebhookEventsModule, DeveloperApiModule, AuthenticationModule, SubscriptionApiModule, EmailingModule, WalletsModule, SendingSmsModule],
   controllers: [AppController],
   providers: [AppService],
 })
