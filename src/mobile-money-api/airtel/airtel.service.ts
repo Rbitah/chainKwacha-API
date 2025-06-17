@@ -16,7 +16,6 @@ export class AirtelMoneyService {
   private readonly clientId: string;
   private readonly clientSecret: string;
   private readonly stagingUrl: string;
-  private readonly productionUrl: string;
 
   constructor(
     private readonly http: HttpService,
