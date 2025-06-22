@@ -32,6 +32,13 @@ export class AuthenticationService {
     return { token }
   }
 
+  async verifyLoginCode(email: string, code: string) {
+    await this.verifyResetCode(email, code);
+    const user = await this.usersService.findByEmail(email);
+    const token = await this.generateAccessToken(user.user_ID, user.userRole);
+    return { token };
+  }
+
   async forgetPassword(email) {
     console.log(email)
     const user = await this.usersService.forgetPassword(email)
